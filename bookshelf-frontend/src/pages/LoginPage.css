@@ -1,0 +1,44 @@
+/* src/pages/LoginPage.css */
+
+/* Wrapper utama untuk halaman login, untuk mengatur posisi konten dan konteks stacking */
+.login-page-wrapper {
+  min-height: calc(100vh - 56px - 1.5rem - 1.5rem); /* Contoh: Tinggi viewport - tinggi navbar - margin atas/bawah dari .container di App.jsx. Sesuaikan 56px dengan tinggi navbar Anda. 1.5rem adalah default mt-3 dari Bootstrap */
+  display: flex;
+  align-items: center; /* Vertikal tengah */
+  justify-content: center; /* Horizontal tengah */
+  padding: 20px 0; /* Beri padding vertikal jika perlu */
+  position: relative; /* Diperlukan agar z-index pada Card bekerja dengan baik terhadap ::before global */
+  z-index: 0;
+}
+
+/* Pseudo-element untuk background global yang fixed dan transparan */
+/* Kita akan menempelkan ini ke body atau html via useEffect untuk efek full-page sejati,
+   atau kita bisa gunakan cara ini jika background hanya untuk area login.
+   Untuk efek full page yang konsisten, lebih baik memanipulasi body atau root.
+   Namun, untuk kesederhanaan dan terikat pada halaman ini, kita buat ::before pada wrapper.
+   Jika ::before pada wrapper, maka min-height wrapper menjadi penting. */
+
+.login-page-wrapper::before {
+  content: "";
+  position: fixed; /* Membuat background menempel pada viewport */
+  top: 0;
+  left: 0;
+  width: 100vw; /* Lebar penuh viewport */
+  height: 100vh; /* Tinggi penuh viewport */
+  background-image: url('../assets/images/bg-login.jpg'); /* SESUAIKAN NAMA FILE GAMBAR ANDA */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; tidak diperlukan jika position: fixed */
+  opacity: 0.3; /* Opasitas gambar 30% */
+  z-index: -1; /* Letakkan di paling belakang */
+}
+
+/* Pastikan Card login terlihat jelas di atas background */
+.login-page-wrapper .card {
+  position: relative; /* Pastikan card mengikuti alur normal dan z-index */
+  z-index: 1; /* Lebih tinggi dari ::before pseudo-element */
+  /* Opsional: Beri sedikit warna pada Card agar lebih menonjol */
+  /* background-color: rgba(255, 255, 255, 0.95); */ /* Contoh: putih sedikit transparan */
+  width: 100%; /* Agar card mengisi Col */
+}
